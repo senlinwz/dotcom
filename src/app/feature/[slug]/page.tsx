@@ -1,17 +1,24 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import DemoPlaceholder from "@/components/DemoPlaceholder";
-import FeatureMetrix, { MAIN_FEATURES, FeatureItem } from "@/components/FeatureMetrix";
+import FeatureMetrix, { MAIN_FEATURES } from "@/components/FeatureMetrix";
 import LatestVersion from "@/components/LatestVersion";
 import SectionContainer from "@/components/SectionContainer";
 import { getMetadata } from "@/utils/metadata";
 
-interface Props {
-  params: Promise<{ slug: string }>;
+interface PageProps {
+  params: Promise<{
+    slug: string;
+  }>;
 }
 
-const Page = async (props: Props) => {
-  const params = await props.params;
-  const feature = MAIN_FEATURES.find((feature) => feature.slug === params.slug) as FeatureItem;
+const Page = async ({ params }: PageProps) => {
+  const resolvedParams = await params;
+  const feature = MAIN_FEATURES.find((item) => item.slug === resolvedParams.slug);
+
+  if (!feature) {
+    notFound();
+  }
 
   return (
     <SectionContainer>
@@ -29,9 +36,14 @@ const Page = async (props: Props) => {
   );
 };
 
-export const generateMetadata = async (props: Props): Promise<Metadata> => {
-  const params = await props.params;
-  const feature = MAIN_FEATURES.find((feature) => feature.slug === params.slug) as FeatureItem;
+export const generateMetadata = async ({ params }: PageProps): Promise<Metadata> => {
+  const resolvedParams = await params;
+  const feature = MAIN_FEATURES.find((item) => item.slug === resolvedParams.slug);
+
+  if (!feature) {
+    notFound();
+  }
+
   return getMetadata({
     title: feature.title + " - Memos",
     description: feature.description,
@@ -39,12 +51,10 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
   });
 };
 
-export const generateStaticParams = () => {
-  return MAIN_FEATURES.map((feature) => {
-    return {
-      slug: feature.slug,
-    };
-  });
-};
+export function generateStaticParams() {
+  return MAIN_FEATURES.map((feature) => ({
+    slug: feature.slug,
+  }));
+}
 
 export default Page;

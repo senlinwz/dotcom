@@ -8,10 +8,9 @@ interface LocalMetadata {
 }
 
 export const getMetadata = (metadata: Partial<LocalMetadata>): Metadata => {
-  const title = metadata.title || "Memos - Open Source, Self-hosted, Your Notes, Your Way";
+  const title = metadata.title || "假装上班.公司——让生活继续前行";
   const description =
-    metadata.description ||
-    "A privacy-first, lightweight note-taking solution that allows you to effortlessly capture and share your ideas.";
+    metadata.description || "打造专业的办公环境，助您在职业转型期保持工作节奏，轻松度过职业空窗期，为下一份工作做好完美铺垫";
   const url = metadata.pathname || "";
   const imagePath = metadata.imagePath || "/logo-rounded.png";
   const hasFeatureImage = !!metadata.imagePath;
@@ -27,24 +26,16 @@ export const getMetadata = (metadata: Partial<LocalMetadata>): Metadata => {
       images: [
         {
           url: imagePath,
-          alt: "Memos",
+          alt: "假装上班",
         },
       ],
     },
     twitter: {
       card: hasFeatureImage ? "summary_large_image" : "summary",
     },
-    metadataBase: new URL("https://www.usememos.com"),
     icons: {
-      icon: "/logo-rounded.png",
-      apple: [
-        { url: "/favicon/favicon.png" },
-        { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-        { url: "/favicon/favicon-48x48.png", sizes: "48x48", type: "image/png" },
-        { url: "/favicon/favicon-128x128.png", sizes: "128x128", type: "image/png" },
-        { url: "/favicon/favicon-256x256.png", sizes: "256x256", type: "image/png" },
-        { url: "/favicon/favicon-512x512.png", sizes: "512x512", type: "image/png" },
-      ],
+      icon: "/icon.png",
+      apple: [{ url: "/icon.png" }],
     },
   };
 };

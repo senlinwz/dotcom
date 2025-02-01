@@ -84,7 +84,7 @@ If you use a local domain name, the kind resolved via hosts file or a local DNS 
 
 ```yaml
 localhost, memos.local {
-    tls internal
-    reverse_proxy memos:5230
+tls internal
+reverse_proxy memos:5230
 }
 ```
